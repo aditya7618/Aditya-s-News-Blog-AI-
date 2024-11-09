@@ -1,0 +1,18 @@
+{
+    "params":
+    {
+        "local_server":"True",
+        "local_uri":"mysql+mysqlconnector://root:@localhost/news_website",
+        "prod_uri":"mysql+mysqlconnector://root:@localhost/news_website",
+        "fb_url":"https://www.facebook.com/news_website",
+        "tw_url":"https://www.twitter.com/news_website",
+        "linkedin_url":"https://www.linkedin.com/news_website",
+        "wp_url":"https://www.whatsapp.com/news_website",
+        "no_of_posts":5,
+        "blog_name":"The Gazette",
+        "admin_user":"aditya",
+        "admin_password":"Adi@#123"
+    }
+
+
+}

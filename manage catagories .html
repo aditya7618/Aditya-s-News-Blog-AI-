@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .category-list {
+            margin-top: 20px;
+        }
+
+        .category-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .category-item button {
+            margin-right: 10px;
+        }
+        .sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  background-color: #1b134e;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #575757;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+          <li><a href="dashboard .html">Dashboard Home</a></li>
+          <li><a href="Manage posts .html">Manage Posts</a></li>
+          <li><a href="manage catagories .html">Categories</a></li>
+          <li><a href="tag manager .html">Tags</a></li>
+        </ul>
+      </div>
+
+    <div class="container">
+        <h1>Manage Categories</h1>
+
+        <div class="category-editor">
+            <form id="category-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="category-name">Category Name</label>
+                    <input type="text" id="category-name" placeholder="Enter category name" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="submit-btn" onclick="createOrUpdateCategory()">Save Category</button>
+                </div>
+            </form>
+        </div>
+
+        <h2>Existing Categories</h2>
+        <div id="category-list" class="category-list"></div>
+    </div>
+
+    <script>
+        // Function to create or update category
+        function createOrUpdateCategory() {
+            const name = document.getElementById('category-name').value;
+            const categoryId = document.getElementById('category-id') ? document.getElementById('category-id').value : null;
+
+            if (name) {
+                let categories = JSON.parse(localStorage.getItem('categories')) || [];
+
+                if (categoryId) {
+                    // Update existing category
+                    const index = categories.findIndex(category => category.id === categoryId);
+                    if (index > -1) {
+                        categories[index].name = name;
+                    }
+                } else {
+                    // Create new category
+                    const newCategory = { id: Date.now().toString(), name };
+                    categories.push(newCategory);
+                }
+
+                localStorage.setItem('categories', JSON.stringify(categories));
+                displayCategories();
+                clearForm();
+            } else {
+                alert("Please enter a category name.");
+            }
+        }
+
+        // Function to display categories
+        function displayCategories() {
+            const categories = JSON.parse(localStorage.getItem('categories')) || [];
+            const categoryList = document.getElementById('category-list');
+            categoryList.innerHTML = ''; // Clear the existing list
+
+            categories.forEach(category => {
+                const categoryItem = document.createElement('div');
+                categoryItem.className = 'category-item';
+                categoryItem.innerHTML = `
+                    <strong>${category.name}</strong>
+                    <button onclick="editCategory('${category.id}')">Edit</button>
+                    <button onclick="deleteCategory('${category.id}')">Delete</button>
+                `;
+                categoryList.appendChild(categoryItem);
+            });
+        }
+
+        // Function to edit a category
+        function editCategory(id) {
+            const categories = JSON.parse(localStorage.getItem('categories')) || [];
+            const category = categories.find(c => c.id === id);
+
+            if (category) {
+                document.getElementById('category-name').value = category.name;
+
+                // Set category ID in a hidden input to use for updating
+                let categoryIdInput = document.getElementById('category-id');
+                if (!categoryIdInput) {
+                    categoryIdInput = document.createElement('input');
+                    categoryIdInput.type = 'hidden';
+                    categoryIdInput.id = 'category-id';
+                    document.getElementById('category-form').appendChild(categoryIdInput);
+                }
+                categoryIdInput.value = category.id;
+            }
+        }
+
+        // Function to delete a category
+        function deleteCategory(id) {
+            let categories = JSON.parse(localStorage.getItem('categories')) || [];
+            categories = categories.filter(category => category.id !== id);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            displayCategories();
+        }
+
+        // Function to clear the form
+        function clearForm() {
+            document.getElementById('category-name').value = '';
+            const categoryIdInput = document.getElementById('category-id');
+            if (categoryIdInput) {
+                categoryIdInput.remove();
+            }
+        }
+
+        // Display categories on page load
+        window.onload = displayCategories;
+    </script>
+</body>
+</html>

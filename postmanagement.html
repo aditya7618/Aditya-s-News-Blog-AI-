@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post Management</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-bottom: 20px;
+            margin-left: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        #editor-container {
+            height: 200px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .submit-btn,
+        .preview-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .submit-btn:hover,
+        .preview-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .post-list {
+            margin-top: 20px;
+        }
+
+        .post-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .post-item h3 {
+            margin: 0;
+        }
+
+        .post-item button {
+            margin-right: 10px;
+        }
+
+        .tags {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .post-status {
+            color: green;
+        }
+
+        .draft-status {
+            color: orange;
+        }
+
+        .media-preview img, .media-preview video {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+        .sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  background-color: #1b134e;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #3a3285;
+}
+.tag {
+      background-color: #1b134e;
+      color: white;
+      padding: 8px 15px;
+      margin: 5px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .tag:hover {
+      background-color: #3a3285;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+          <li><a href="/login">Dashboard Home</a></li>
+          <li><a href="/postmanagement">Manage Posts</a></li>
+          <li><a href="/managepost/0">Add New Post</a></li>
+        </ul>
+      </div>
+
+    <div class="container">
+        <h1>Post Manager</h1>
+        <table border="1">
+            <thead>
+              <tr>
+                <th>S.no</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>edit</th>
+                <th>delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for post in posts %}
+              <tr>
+                <td>{{post.sno}}</td>
+                <td>{{post.title}}</td>
+                <td>{{post.date}}</td>
+                <td><a href="/managepost/{{post.sno}}"><button class="tag">Edit</button></a></td>
+                <td><button class="tag">delete</button></td>
+              </tr>
+              {% endfor %}
+      
+            </tbody>
+          </table>
+
+        
+        
+</body>
+
+</html>

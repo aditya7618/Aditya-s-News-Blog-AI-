@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .tag-list {
+            margin-top: 20px;
+        }
+
+        .tag-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag-item h3 {
+            margin: 0;
+        }
+
+        .tag-item button {
+            margin-left: 10px;
+        }
+        .sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  background-color: #1b134e;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: white;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #575757;
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+          <li><a href="dashboard .html">Dashboard Home</a></li>
+          <li><a href="Manage posts .html">Manage Posts</a></li>
+          <li><a href="manage catagories .html">Categories</a></li>
+          <li><a href="tag manager .html">Tags</a></li>
+        </ul>
+      </div>
+
+    <div class="container">
+        <h1>Tag Management System</h1>
+
+        <div class="tag-editor">
+            <form id="tag-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="tag-name">Tag Name</label>
+                    <input type="text" id="tag-name" placeholder="Enter tag name" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="submit-btn" onclick="createOrUpdateTag()">Save Tag</button>
+                </div>
+            </form>
+        </div>
+
+        <h2>Existing Tags</h2>
+        <div id="tag-list" class="tag-list"></div>
+    </div>
+
+    <script>
+        // Function to create or update a tag
+        function createOrUpdateTag() {
+            const tagName = document.getElementById('tag-name').value;
+            const tagId = document.getElementById('tag-id') ? document.getElementById('tag-id').value : null;
+
+            if (tagName) {
+                let tags = JSON.parse(localStorage.getItem('tags')) || [];
+
+                if (tagId) {
+                    // Update existing tag
+                    const index = tags.findIndex(tag => tag.id === tagId);
+                    if (index > -1) {
+                        tags[index].name = tagName;
+                    }
+                } else {
+                    // Create new tag
+                    const newTag = { id: Date.now().toString(), name: tagName };
+                    tags.push(newTag);
+                }
+
+                localStorage.setItem('tags', JSON.stringify(tags));
+                displayTags();
+                clearForm();
+            } else {
+                alert("Please fill in the tag name.");
+            }
+        }
+
+        // Function to display tags
+        function displayTags() {
+            const tags = JSON.parse(localStorage.getItem('tags')) || [];
+            const tagList = document.getElementById('tag-list');
+            tagList.innerHTML = ''; // Clear the existing list
+
+            tags.forEach(tag => {
+                const tagItem = document.createElement('div');
+                tagItem.className = 'tag-item';
+                tagItem.innerHTML = `
+                    <h3>${tag.name}</h3>
+                    <div>
+                        <button onclick="editTag('${tag.id}')">Edit</button>
+                        <button onclick="deleteTag('${tag.id}')">Delete</button>
+                    </div>
+                `;
+                tagList.appendChild(tagItem);
+            });
+        }
+
+        // Function to edit a tag
+        function editTag(id) {
+            const tags = JSON.parse(localStorage.getItem('tags')) || [];
+            const tag = tags.find(t => t.id === id);
+
+            if (tag) {
+                document.getElementById('tag-name').value = tag.name;
+
+                // Set tag ID in a hidden input to use for updating
+                let tagIdInput = document.getElementById('tag-id');
+                if (!tagIdInput) {
+                    tagIdInput = document.createElement('input');
+                    tagIdInput.type = 'hidden';
+                    tagIdInput.id = 'tag-id';
+                    document.getElementById('tag-form').appendChild(tagIdInput);
+                }
+                tagIdInput.value = tag.id;
+            }
+        }
+
+        // Function to delete a tag
+        function deleteTag(id) {
+            let tags = JSON.parse(localStorage.getItem('tags')) || [];
+            tags = tags.filter(tag => tag.id !== id);
+            localStorage.setItem('tags', JSON.stringify(tags));
+            displayTags();
+        }
+
+        // Function to clear the form
+        function clearForm() {
+            document.getElementById('tag-name').value = '';
+            const tagIdInput = document.getElementById('tag-id');
+            if (tagIdInput) {
+                tagIdInput.remove();
+            }
+        }
+
+        // Display tags on page load
+        window.onload = displayTags;
+    </script>
+</body>
+</html>

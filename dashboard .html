@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .sidebar {
+      position: fixed;
+      width: 250px;
+      height: 100%;
+      background-color: #1b134e;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      color: white;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #3a3285;
+    }
+
+    .main-content {
+      margin-left: 270px;
+      padding: 20px;
+      background-color: white;
+      min-height: 100vh;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    #recent-posts,
+    #category-list {
+      list-style-type: none;
+    }
+
+    #recent-posts li,
+    #category-list li {
+      margin-bottom: 10px;
+    }
+
+    #recent-posts a,
+    #category-list a {
+      text-decoration: none;
+      color: #007BFF;
+    }
+
+    #recent-posts a:hover,
+    #category-list a:hover {
+      text-decoration: underline;
+    }
+
+    #tag-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background-color: #1b134e;
+      color: white;
+      padding: 8px 15px;
+      margin: 5px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .tag:hover {
+      background-color: #3a3285;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li><a href="/login">Dashboard Home</a></li>
+      <li><a href="/postmanagement">Manage Posts</a></li>
+      <li><a href="/managepost/0">Add New Post</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Welcome to Your Blog Dashboard</h1>
+    </div>
+
+    
+
+    <!-- Section for Categories -->
+    
+
+</body>
+
+</html>

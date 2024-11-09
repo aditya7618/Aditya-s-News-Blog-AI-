@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Flexbox & Grid for Responsive Layout */
+        header {
+            background-color: #1b134e;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Hide elements by default for search functionality */
+        h1,
+        .openbtn {
+            transition: opacity 0.3s ease;
+        }
+
+        .hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Sidebar Menu (for mobile) */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #1b134e;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #3a3285;
+            border-radius: 5px;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        /* Search Bar inside Sidebar */
+        .sidebar .search-bar {
+            display: block;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 32px;
+            width: 180px;
+        }
+
+        /* Automatic Featured Post */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Slider container styling */
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        /* Flexbox for the slides */
+        .slides {
+            display: flex;
+            width: 300%;
+            animation: slide 12s infinite;
+        }
+
+        /* Each slide takes up full container width */
+        .slide {
+            width: 100%;
+            transition: 0.5s ease;
+            position: relative;
+        }
+
+        /* Image within each slide */
+        .slide img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* Caption Styling */
+        .caption {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+
+        /* Keyframes for sliding effect */
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            33% {
+                transform: translateX(-100%);
+            }
+
+            66% {
+                transform: translateX(-200%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive design for different screen sizes */
+
+        /* For tablets and smaller desktops */
+        @media (max-width: 1024px) {
+            .slider {
+                max-width: 800px;
+            }
+
+            .caption {
+                font-size: 14px;
+                max-width: 90%;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 600px) {
+            .slider {
+                max-width: 100%;
+                margin: 10px;
+            }
+
+            .caption {
+                font-size: 12px;
+                padding: 8px;
+                bottom: 5px;
+                left: 10px;
+                max-width: 100%;
+            }
+
+            .slide img {
+                border-radius: 5px;
+            }
+        }
+
+        /* automatic image slider*/
+        * {
+            box-sizing: border-box;
+        }
+
+        .slider-container {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            width: 300%;
+            /* Adjust based on the number of images */
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .slider-container {
+                width: 50%;
+                /* Half width on desktop */
+                margin: 0 auto;
+                /* Center the slider */
+            }
+        }
+
+        /* Hamburger menu */
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            left: 0px;
+            background-color: #1b134e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+        }
+
+        /* Breaking News */
+        .breaking-news {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            /* Remove margin */
+            padding: 0.5rem;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Slider */
+        .slider-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* News Section */
+        .news-section {
+            padding: 0, 0.5rem;
+        }
+
+        main {
+            overflow-x: auto;
+            /* Allow horizontal scrolling */
+            white-space: nowrap;
+            /* Prevent line breaks */
+            padding: 20px 0;
+        }
+
+        .horizontal-posts {
+            display: inline-block;
+            /* Align items horizontally */
+        }
+
+        article {
+            display: inline-block;
+            border: 1px solid #ddd;
+            margin: 0 20px;
+            /* Space between articles */
+            padding: 15px;
+            width: 400px;
+            /* Fixed width for articles */
+            vertical-align: top;
+            /* Align articles at the top */
+            border-radius: 5px;
+            background: #f9f9f9;
+            transition: transform 0.3s;
+        }
+
+        article:hover {
+            transform: scale(1.05);
+            /* Scale up on hover */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .post-date {
+            color: #777;
+        }
+
+        .news-content {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            margin-top: 25px;
+            margin-left: 50px;
+            width: 95vw;
+
+        }
+
+        .news-content-items {
+            display: block;
+        }
+
+        .news-section a {
+            text-decoration: none;
+            color: black;
+        }
+        .news-section a:hover{
+            text-decoration: underline;
+        }
+
+        .news-content img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+
+
+
+        /* Footer */
+        footer {
+            background-color: #1b134e;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            width: 100%;
+            margin-top: 103px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .news-section {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .openbtn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Section -->
+    <header>
+        <h1>The Gazette</h1>
+        <button class="openbtn" onclick="openNav()">&#9776; Menu</button>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <span class="search-icon">&#128269;</span>
+        <input type="text" class="search-bar" placeholder="Search...">
+        <a href="#">Home</a>
+        <a href="#">Business Today</a>
+        <a href="#">India Today</a>
+        <a href="#">Lallantop</a>
+        <a href="#">LIVE</a>
+        <a href="#">World News</a>
+        <a href="#">Politics</a>
+        <a href="#">Entertainment</a>
+        <a href="#">Sports</a>
+        <a href="#">Technology</a>
+        <a href="/login ">Login</a>
+    </div>
+
+    <!-- Breaking News -->
+    <div class="breaking-news">
+        <marquee> BREAKING NEWS: Major events happening right now!</marquee>
+    </div>
+
+    <!-- Slider Section -->
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <img src="image1.jpg" alt="Image 1">
+            </div>
+            <div class="slide">
+                <img src="image2.jpg" alt="Image 2">
+            </div>
+            <div class="slide">
+                <img src="image3.jpg" alt="Image 3">
+            </div>
+        </div>
+    </div>
+
+    <h2> Headlines...</h2>
+    <!-- News Section -->
+
+    {% for post in posts %}
+    
+    <div class="news-section">
+        <a href="/post/{{post.slug}}">
+            <div class="news-content">
+                <img src="news1.jpg" alt="News 1">
+                <div class="news-content-items">
+                    <h2>{{post.title}}</h2>
+                    <p>{{post.content[0:45]}}...</p>
+
+                </div>
+
+            </div>
+        </a>
+
+    </div>
+    {% endfor %}
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 News Website. All rights reserved.</p>
+    </footer>
+
+    <!-- Sidebar Script -->
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
+   
+
+</body>
+
+</html>
